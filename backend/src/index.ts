@@ -12,13 +12,15 @@ const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string,{
       tls: true,
-      tlsAllowInvalidCertificates: true, // Remove this in production
+      tlsAllowInvalidCertificates: true, 
     });
     console.log("Successfully connected to MongoDB");
   } catch (error) {
     console.error("Error connecting to MongoDB", error);
   }
 };
+
+connectDB();
 
 const app = express();
 
