@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
@@ -6,13 +6,21 @@ import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 import cookieParser from "cookie-parser";
 import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+import myHotelRoutes from "./routes/my-hotels";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // MongoDB Connection
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string,{
+    await mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string, {
       tls: true,
-      tlsAllowInvalidCertificates: true, 
+      // tlsAllowInvalidCertificates: true,
     });
     console.log("Successfully connected to MongoDB");
   } catch (error) {
@@ -40,6 +48,11 @@ app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/my-hotels", myHotelRoutes);
+
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+});
 
 app.listen(7000, () => {
   console.log("server is running on localhost: 7000");

@@ -44,7 +44,7 @@ const SignIn = () => {
           type="email"
           className="border rounded w-full py-1 px-2 font-normal"
           {...register("email", { required: "This field is required" })}
-        ></input>
+        />
         {errors.email && (
           <span className="text-red-500">{errors.email.message}</span>
         )}
@@ -61,14 +61,17 @@ const SignIn = () => {
               message: "Password must be at least 6 characters",
             },
           })}
-        ></input>
+        />
         {errors.password && (
           <span className="text-red-500">{errors.password.message}</span>
         )}
       </label>
       <span className="flex items-center justify-between">
         <span className="text-sm">
-          Not Registered? <Link to="/register" className="underline">Create an Account</Link>
+          Not Registered?{" "}
+          <Link to="/register" className="underline">
+            Create an Account
+          </Link>
         </span>
         <button
           type="submit"
