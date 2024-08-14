@@ -44,7 +44,7 @@ test("Should book hotel", async ({ page }) => {
   await page.getByPlaceholder("Where are you going?").fill("Dublin");
 
   const date = new Date();
-  date.setDate(date.getDate() + 4);
+  date.setDate(date.getDate() + 3);
   const formattedDate = date.toISOString().split("T")[0];
   await page.getByPlaceholder("Check-out Date").fill(formattedDate);
 
@@ -65,4 +65,7 @@ test("Should book hotel", async ({ page }) => {
 
   await page.getByRole("button", {name: "Confirm Booking"}).click();
   await expect(page.getByText("Booking Saved!")).toBeVisible();
+
+  await page.getByRole("link", {name: "My Bookings"}).click();
+  await expect(page.getByText("Dublin Getaways")).toBeVisible();
 });
