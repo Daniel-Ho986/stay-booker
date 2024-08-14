@@ -56,6 +56,16 @@ router.get("/search", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/", async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find().sort("-lastUpdated");
+    res.json(hotels);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ message: "Error fetching hotels" });
+  }
+});
+
 // /api/hotels/59389583959835
 router.get(
   "/:id",
@@ -156,7 +166,7 @@ router.post(
       if (!hotel) {
         return res.status(400).json({ message: "Hotel not found" });
       }
-      
+
       await hotel.save();
       res.status(200).send();
     } catch (error) {
