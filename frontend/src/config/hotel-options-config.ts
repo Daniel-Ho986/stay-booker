@@ -25,4 +25,8 @@ export const hotelTypes = [
     "Outdoor Pool",
     "Spa",
     "Fitness Center",
+    "On-site Restaurant",
+    "Breakfast Included",
+    "Pet Friendly",
+    "Garden Courtyard"
   ];
