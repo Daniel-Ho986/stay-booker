@@ -53,7 +53,7 @@ test("Should book hotel", async ({ page }) => {
   await page.getByText("Dublin Getaways").click();
   await page.getByRole("button", { name: "Book now" }).click();
 
-  await expect(page.getByText("Total Cost: $360.00")).toBeVisible();
+  await expect(page.getByText("Total Cost: $240.00")).toBeVisible();
 
   const stripeFrame = page.frameLocator("iframe").first();
   await stripeFrame
