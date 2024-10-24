@@ -1,133 +1,127 @@
 # Stay-booker
 
-Stay-booker is a web application that allows users to book, manage, and review hotels. It features full CRUD functionality, user authentication, and authorization, and provides users with a seamless hotel booking experience.
+[Stay Booker](https://stay-booker.onrender.com/) is a hotel booking application that allows users to search for hotels, manage bookings, and add their own hotels. The project includes a robust authentication system, hotel search functionality, and integration with payment gateways for hotel bookings.
 
 ## Table of Contents
+
 - [Features](#features)
 - [Tech Stack](#tech-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Routes](#routes)
-- [Middleware](#middleware)
-- [Demo](#demo)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Environment Variables](#environment-variables)
+  - [Running the Project](#running-the-project)
+- [API Endpoints](#api-endpoints)
 - [License](#license)
 
 ## Features
 
-### Hotels
-- **CRUD Operations**: Create, Read, Update, and Delete hotels.
-- **Search Functionality**: Users can search for hotels by name or location.
-- **Booking Management**: Users can book a hotel and manage their bookings.
-- **Hotel Reviews**: Add reviews and ratings for hotels.
-
-### User Management
-- **Authentication**: User registration, login, and logout with JWT tokens.
-- **Authorization**: Protected routes to ensure only authorized users can perform certain actions.
-- **Profile Management**: Users can view and update their profiles and booking history.
-
-### Security
-- **Data Validation**: Secure and sanitize user input using `Joi` for validation.
-- **Authentication & Authorization**: Secure APIs using JWT tokens and middleware.
-
-### Error Handling
-- **404 Error Page**: Provides friendly error messages for non-existent routes.
+- **User Authentication**: Register, sign in, sign out, and validate sessions.
+- **Hotel Search**: Users can search for hotels based on destination, date, price, and other filters.
+- **Hotel Management**: Registered users can add, edit, and manage their own hotels.
+- **Room Booking**: Users can book rooms and pay through integrated payment systems.
+- **Booking Management**: View and manage your bookings.
+- **Responsive Design**: Optimized for mobile and desktop devices.
 
 ## Tech Stack
 
-### Backend
-- **Node.js**: Runtime environment.
-- **Express**: Web framework for Node.js.
-- **MongoDB**: NoSQL database.
-- **Mongoose**: ODM for MongoDB.
-- **JWT**: JSON Web Tokens for authentication.
-- **Bcrypt**: Password hashing for security.
+- **Frontend**: React, TypeScript, React Query, React Router
+- **Backend**: Node.js, Express, TypeScript
+- **Database**: MongoDB (or any other database, depending on your setup)
+- **Authentication**: JSON Web Tokens (JWT) with session management
+- **Testing**: Playwright for end-to-end testing
 
-### Frontend
-- **HTML5/CSS3**: Basic styling and structure for pages.
-- **JavaScript**: Adds interactivity and dynamic content to the user interface.
+## Getting Started
 
-### Middleware & Libraries
-- **Joi**: Data validation library.
-- **Express-Validator**: Validates incoming request data.
-- **JSON Web Token**: Authentication via JWT.
-- **bcrypt**: Securely hashes passwords for storage.
+### Installation
 
-## Installation
+1. **Clone the repository**:
 
-1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Daniel-Ho986/stay-booker.git
+   cd stay-booker
+
+2. **Backend Setup**:
+
+   ```bash
+   cd backend
+   npm install
+
+3. **Frontend Setup**:
+
+   ```bash
+   cd frontend
+   npm install
+
+4. **E2E Tests Setup**:
+
+   ```bash
+   cd e2e-tests
+   npm install
+
+### Environment Variables
+
+Create `.env` files in both `backend/` and `frontend/` directories with the following variables:
+
+1. **Backend** (`backend/.env`)
+
     ```bash
-    git clone https://github.com/Daniel-Ho986/stay-booker.git
-    cd stay-booker
-    ```
+    VITE_API_BASE_URL=http://localhost:5000
+    DATABASE_URL=mongodb://localhost:27017/stay-booker
+    JWT_SECRET=your_jwt_secret
 
-2. **Install dependencies:**
+2. **Frontend** (`frontend/.env`)
+
     ```bash
-    npm install
-    ```
+    VITE_API_BASE_URL=http://localhost:5000
 
-3. **Environment variables:**
-    Create a `.env` file in the root directory and add your configurations:
-    ```plaintext
-    MONGO_URI=<Your MongoDB URI>
-    JWT_SECRET=<Your JWT Secret>
-    NODE_ENV=<development | production>
-    ```
+### Running the Project
 
-4. **Run the application:**
+1. **Run the Backend**:
+    Navigate to the `backend` directory and start the server:
+
     ```bash
     npm run dev
-    ```
 
-5. **Access the application:**
-    Open your browser and navigate to `http://localhost:3000`.
+    The backend will be running on `http://localhost:5000`.
 
-## Usage
+2. **Run the Frontend**:
+     Navigate to the `frontend` directory and start the frontend:
 
-### Routes
+    ```bash
+    npm run dev
 
-- **Authentication**:
-  - `POST /auth/register`: Register a new user.
-  - `POST /auth/login`: Log in a user.
-  - `POST /auth/logout`: Log out the user.
+    The frontend will be running on `http://localhost:3000`.
 
-- **Hotels**:
-  - `GET /hotels`: List all hotels.
-  - `POST /hotels`: Create a new hotel.
-  - `GET /hotels/:id`: View a specific hotel.
-  - `PUT /hotels/:id`: Update hotel information.
-  - `DELETE /hotels/:id`: Delete a hotel.
+3. **Run End-to-End Tests**:
+     Navigate to the `e2e-tests` directory and run the tests:
 
-- **Bookings**:
-  - `GET /my-bookings`: List user bookings.
-  - `POST /hotels/:id/book`: Book a hotel.
-  - `DELETE /my-bookings/:id`: Cancel a booking.
+    ```bash
+    npx playwright test
 
-- **Reviews**:
-  - `POST /hotels/:id/reviews`: Add a review for a hotel.
-  - `DELETE /hotels/:id/reviews/:reviewId`: Delete a review.
+## API Endpoints
 
-## Middleware
+### User Authentication
 
-- **Authentication & Authorization**:
-  - `authMiddleware`: Protect routes, ensuring users are authenticated.
-  - `hotelOwnerMiddleware`: Ensure users can only update/delete their own hotels.
-  
-- **Validation**:
-  - `Joi` validation schemas are used to validate input data for hotel creation, bookings, and reviews.
+- `POST /api/users/register`: Register a new user.
+- `POST /api/auth/login`: Log in as an existing user.
+- `POST /api/auth/logout`: Log out the current user.
+- `GET /api/users/me`: Fetch the current user's profile.
+- `GET /api/auth/validate-token`: Validate the user's session token.
 
-## Demo
+### Hotel Management
 
-#### Hotel List
-![Hotel List](public/demo/hotelList.png)
+- `POST /api/my-hotels`: Add a new hotel.
+- `GET /api/my-hotels`: Fetch the user's hotels.
+- `GET /api/my-hotels/:hotelId`: Fetch a specific hotel by ID.
+- `PUT /api/my-hotels/:hotelId`: Update an existing hotel.
 
-#### Booking Management
-![Booking Management](public/demo/booking.png)
+### Hotel Search and Booking
 
-#### User Authentication Pages
-<div style="display: flex; gap: 10px;">
-    <img src="public/demo/login.png" alt="Login Page" height="275" width="40%"/>
-    <img src="public/demo/register.png" alt="Registration Page" height="275" width="40%"/>
-</div>
+- `GET /api/hotels`: Fetch all available hotels.
+- `GET /api/hotels/search`: Search for hotels based on filters.
+- `GET /api/hotels/:hotelId`: Fetch a specific hotel by ID.
+- `POST /api/hotels/:hotelId/bookings`: Book a room at a specific hotel.
+- `POST /api/hotels/:hotelId/bookings/payment-intent`: Create a payment intent for booking.
 
 ## License
 
